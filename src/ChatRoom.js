@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
+// const API_SERVER = 'https://ml-stg-websocket.innerlogic.ca'
+const API_SERVER = 'http://127.0.0.1:8000'
+
 function ChatRooms({setSelectedChatRoom}) {
-    
+  
+
   const [chatRooms, setChatRooms] = useState([]);
   const [newChatRoomName, setNewChatRoomName] = useState('');
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/chat-rooms')
+    fetch(`${API_SERVER}/chat-rooms`)
       .then(response => response.json())
       .then(data => {
         setChatRooms(data.chat_rooms);
@@ -23,7 +27,7 @@ function ChatRooms({setSelectedChatRoom}) {
       return;
     }
 
-    fetch(`http://127.0.0.1:8000/chat-rooms/${newChatRoomName}`, { method: 'POST' })
+    fetch(`${API_SERVER}/chat-rooms/${newChatRoomName}`, { method: 'POST' })
       .then(response => response.json())
       .then(data => {
         if (data.message === 'Chat room created successfully.') {
@@ -43,9 +47,10 @@ function ChatRooms({setSelectedChatRoom}) {
     setSelectedChatRoom(e)
   }
 
+
   return (
     <div>
-      <h2>List of Chat Rooms</h2>
+   
       <ul>
         {chatRooms.map(chatRoom => (
           <li key={chatRoom} onClick={() => ClickedOneChat(chatRoom)} >{chatRoom}</li>
@@ -57,7 +62,7 @@ function ChatRooms({setSelectedChatRoom}) {
           value={newChatRoomName}
           onChange={event => setNewChatRoomName(event.target.value)}
         />
-        <button type="submit">Create Chat Room</button>
+        <button type="submit">Add</button>
       </form>
     </div>
   );
