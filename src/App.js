@@ -1,46 +1,15 @@
-import React, { useState } from 'react';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import rootReducer from './reducers';
+import MainApp from './MainApp';
 
-import { Container, Header } from 'semantic-ui-react'
-import { Grid, } from 'semantic-ui-react'
-import WebSocketComponent from "./WebSocket"
-import ChatRooms from './ChatRoom';
+const store = createStore(rootReducer);
 
 function App() {
-  const [selectedChatRoom, setSelectedChatRoom] = useState(false)
-
-  console.log(selectedChatRoom)
   return (
-    <Container text>
-      <Header sub>AI Chat Demo</Header>
-
-
-      <Grid columns={2} celled='internally'>
-        <Grid.Row>
-          <Grid.Column floated='left' width={4}>
-            <Header as='h3' block>
-              Chat Rooms
-            </Header>
-
-            <ChatRooms
-              setSelectedChatRoom={setSelectedChatRoom}
-            />
-          </Grid.Column>
-
-          <Grid.Column floated='right'  width={12}>
-            <Header as='h3' block>
-              {selectedChatRoom ? `Room ${selectedChatRoom}` : "No Chat room selected"}
-            </Header>
-            {selectedChatRoom &&
-              <WebSocketComponent
-                selectedChatRoom={selectedChatRoom}
-              />
-            }
-          </Grid.Column>
-
-        </Grid.Row>
-
-      </Grid>
-    </Container>
+    <Provider store={store}>
+      <MainApp />
+    </Provider>
   );
 }
 
