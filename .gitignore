@@ -27,3 +27,10 @@ yarn-error.log*
 *__pycache__*
 
 .vscode*
+
+
+client/node_modules
+
+server/node_modules
+
+python_server/venv
